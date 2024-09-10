@@ -5,6 +5,7 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
+    this.id = this.state.list.length;
   }
 
   /**
@@ -42,9 +43,10 @@ class Store {
    * Добавление новой записи
    */
   addItem() {
+    this.setNewId();
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: this.state.list.length + 1, title: 'Новая запись' }],
+      list: [...this.state.list, { code: this.id, title: 'Новая запись', count: 0 }],
     });
   }
 
@@ -67,12 +69,39 @@ class Store {
     this.setState({
       ...this.state,
       list: this.state.list.map(item => {
+        if (item.selected && item.code != code) {
+          item.selected = false;
+        }
         if (item.code === code) {
+          if (!item.selected) {
+            item.count++;
+          }
           item.selected = !item.selected;
         }
         return item;
       }),
     });
+  }
+
+  /**
+   * Установка кода для новой записи
+   */
+  setNewId() {
+    this.id++;
+  }
+
+  /**
+   * Получение информации о количестве выделений
+   * @param count
+   */
+  getInfoSelection(count) {
+    let infoSelection = ' | Выделяли ' + String(count) + ' раз';
+    if (count == 0) {
+      infoSelection = '';
+    } else if (2 <= count % 10 && count % 10 <= 4 && !(12 <= count && count <= 14)) {
+      infoSelection += 'а';
+    }
+    return infoSelection;
   }
 }
 
