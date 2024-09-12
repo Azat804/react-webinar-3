@@ -1,3 +1,4 @@
+import { getIncreasedValue } from './utils.js';
 /**
  * Хранилище состояния приложения
  */
@@ -43,7 +44,7 @@ class Store {
    * Добавление новой записи
    */
   addItem() {
-    this.setNewId();
+    this.id = getIncreasedValue(this.id);
     this.setState({
       ...this.state,
       list: [...this.state.list, { code: this.id, title: 'Новая запись', count: 0 }],
@@ -74,20 +75,13 @@ class Store {
         }
         if (item.code === code) {
           if (!item.selected) {
-            item.count++;
+            item.count = getIncreasedValue(item.count);
           }
           item.selected = !item.selected;
         }
         return item;
       }),
     });
-  }
-
-  /**
-   * Установка кода для новой записи
-   */
-  setNewId() {
-    this.id++;
   }
 
   /**

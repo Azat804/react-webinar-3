@@ -26,3 +26,11 @@ export function createElement(name, props = {}, ...children) {
 
   return element;
 }
+
+/**
+ * Увеличение значения на 1
+ * @param value {Number} Увеличиваемое значение
+ */
+export function getIncreasedValue(value) {
+  return ++value;
+}
