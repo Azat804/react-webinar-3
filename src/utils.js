@@ -34,3 +34,17 @@ export function createElement(name, props = {}, ...children) {
 export function getIncreasedValue(value) {
   return ++value;
 }
+
+/**
+   * Получение информации о количестве выделений
+   * @param count {Number} Количество выделений
+   */
+export function getInfoSelection(count) {
+  let infoSelection = ' | Выделяли ' + String(count) + ' раз';
+  if (count == 0) {
+    infoSelection = '';
+  } else if (2 <= count % 10 && count % 10 <= 4 && !(12 <= count && count <= 14)) {
+    infoSelection += 'а';
+  }
+  return infoSelection;
+}
