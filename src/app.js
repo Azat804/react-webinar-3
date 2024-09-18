@@ -3,6 +3,8 @@ import List from './components/list';
 import Controls from './components/controls';
 import Head from './components/head';
 import PageLayout from './components/page-layout';
+import { useState } from 'react';
+import CustomModal from './components/custom-modal';
 
 /**
  * Приложение
@@ -11,7 +13,9 @@ import PageLayout from './components/page-layout';
  */
 function App({ store }) {
   const list = store.getState().list;
-
+  const basket = store.getState().basket;
+  const totalCost = store.getTotalCost();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const callbacks = {
     onDeleteItem: useCallback(
       code => {
@@ -20,28 +24,40 @@ function App({ store }) {
       [store],
     ),
 
-    onSelectItem: useCallback(
+    onAddItem: useCallback(
       code => {
-        store.selectItem(code);
+        store.addItem(code);
       },
       [store],
     ),
-
-    onAddItem: useCallback(() => {
-      store.addItem();
-    }, [store]),
+    openModal: () => {
+      setModalIsOpen(true);
+    },
+    closeModal: () => {
+      setModalIsOpen(false);
+    },
   };
-
   return (
-    <PageLayout>
-      <Head title="Приложение на чистом JS" />
-      <Controls onAdd={callbacks.onAddItem} />
-      <List
-        list={list}
+    <>
+      <PageLayout>
+        <Head title="Магазин" />
+        <Controls
+          onClickModal={callbacks.openModal}
+          name="Перейти"
+          totalCount={basket.length}
+          totalCost={totalCost}
+        />
+        <List list={list} onClick={callbacks.onAddItem} name="Добавить" />
+      </PageLayout>
+      <CustomModal
+        isOpen={modalIsOpen}
+        onCloseModal={callbacks.closeModal}
+        title="Корзина"
+        list={basket}
         onDeleteItem={callbacks.onDeleteItem}
-        onSelectItem={callbacks.onSelectItem}
-      />
-    </PageLayout>
+        totalCost={totalCost}
+      ></CustomModal>
+    </>
   );
 }
 

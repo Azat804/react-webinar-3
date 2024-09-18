@@ -1,5 +1,21 @@
 .Controls {
   display: flex;
   justify-content: flex-end;
-  padding: 20px;
+  align-items: center;
+  padding: 20px 21px 20px 20px;
+}
+
+.Controls-info {
+  margin-right: 20px;
+  font-size: 18px;
+}
+
+.Controls-info__mark {
+  font-weight: 700;
+}
+
+.Controls-button {
+  font-size: 13px;
+  min-width: 80px;
+  box-sizing: border-box;
 }

@@ -41,47 +41,60 @@ class Store {
   }
 
   /**
-   * Добавление новой записи
+   * Добавление нового товара в  корзину
    */
-  addItem() {
+  addItem(code) {
+    const shopProduct = this.findItem(this.state.list, code);
+    const basketProduct = this.findItem(this.state.basket, code);
+    if (!basketProduct) {
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: generateCode(), title: 'Новая запись' }],
+      basket: [...this.state.basket, { code: code, title: shopProduct.title, price: shopProduct.price, count: 1}],
     });
+  }
+  else {
+    this.setState({
+      ...this.state,
+      basket: this.state.basket.map(item => {
+        if (item.code === code) {
+          return {
+            ...item,
+            count: item.count + 1,
+          };
+        }
+        return item;
+      }),
+    });
+  }
   }
 
   /**
-   * Удаление записи по коду
+   * Удаление товара из корзины
    * @param code
    */
   deleteItem(code) {
     this.setState({
       ...this.state,
       // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter(item => item.code !== code),
+      basket: this.state.basket.filter(item => item.code !== code),
     });
   }
 
   /**
-   * Выделение записи по коду
+   * Выбор товара из списка
+   * @param list
    * @param code
    */
-  selectItem(code) {
-    this.setState({
-      ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          // Смена выделения и подсчёт
-          return {
-            ...item,
-            selected: !item.selected,
-            count: item.selected ? item.count : item.count + 1 || 1,
-          };
-        }
-        // Сброс выделения если выделена
-        return item.selected ? { ...item, selected: false } : item;
-      }),
-    });
+  findItem(list, code) {
+    return list.find((item) => item.code === code);
+  }
+
+  /**
+   * Получение общей стоимости товаров в корзине
+   * @returns {Number}
+   */
+  getTotalCost() {
+    return this.state.basket.reduce((acc, current) => acc + current.price * current.count, 0);
   }
 }
 

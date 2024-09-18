@@ -1,7 +1,7 @@
 .Item {
   display: flex;
-  justify-content: flex-start;
-  transition: background-color 1s;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .Item_selected {
@@ -9,17 +9,48 @@
   color: #fff;
 }
 
+.Item-title {
+  display: flex;
+  justify-content: space-between;
+}
+
 .Item-code {
   padding: 20px 10px 20px 20px;
 }
 
-.Item-title {
-  width: 100%;
+.Item-name {
   padding: 20px 10px;
 }
 
-.Item-actions {
+.Item-info {
   display: flex;
+  justify-content: space-between;
+  width: 50%;
+  gap: 0 20px;
+  margin-right: 20px;
+}
+
+.Item-price {
+  width: 50%;
+  font-size: 18px;
+  text-align: right;
+}
+
+.Item-count {
+  font-size: 18px;
+}
+
+.Item-button {
+  font-size: 13px;
+  min-width: 80px;
+  box-sizing: border-box;
+}
+
+.Item-actions {
+  box-sizing: border-box;
+  width: 50%;
+  display: flex;
+  align-items: center;
   justify-content: flex-end;
-  padding: 20px 20px 20px 10px;
+  padding: 20px 21px 20px 10px;
 }
