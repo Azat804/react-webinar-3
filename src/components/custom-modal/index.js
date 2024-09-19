@@ -10,7 +10,7 @@ function CustomModal({
   isOpen = false,
   onCloseModal = () => {},
   title = '',
-  list = {},
+  list = [],
   onDeleteItem = () => {},
   totalCost = 0,
 }) {
@@ -27,14 +27,13 @@ function CustomModal({
         <Controls onClickModal={onCloseModal} name="Закрыть" />
       </Head>
       <div className="Modal-subtitle"></div>
-      <List list={list} onClick={onDeleteItem} name="Удалить"/>
+      <List list={list} onClick={onDeleteItem} name="Удалить" />
       <div className="Total-info">
         <div className="Total-price">
           <div className="Total-price__text">Итого</div>
           <div className="Total-price__value">{totalCost + ' \u20bd'}</div>
         </div>
       </div>
-	  
     </Modal>
   );
 }

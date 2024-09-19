@@ -42,30 +42,33 @@ class Store {
 
   /**
    * Добавление нового товара в  корзину
+   *  @param code
    */
   addItem(code) {
     const shopProduct = this.findItem(this.state.list, code);
     const basketProduct = this.findItem(this.state.basket, code);
     if (!basketProduct) {
-    this.setState({
-      ...this.state,
-      basket: [...this.state.basket, { code: code, title: shopProduct.title, price: shopProduct.price, count: 1}],
-    });
-  }
-  else {
-    this.setState({
-      ...this.state,
-      basket: this.state.basket.map(item => {
-        if (item.code === code) {
-          return {
-            ...item,
-            count: item.count + 1,
-          };
-        }
-        return item;
-      }),
-    });
-  }
+      this.setState({
+        ...this.state,
+        basket: [
+          ...this.state.basket,
+          { code: code, title: shopProduct.title, price: shopProduct.price, count: 1 },
+        ],
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        basket: this.state.basket.map(item => {
+          if (item.code === code) {
+            return {
+              ...item,
+              count: item.count + 1,
+            };
+          }
+          return item;
+        }),
+      });
+    }
   }
 
   /**
@@ -84,9 +87,10 @@ class Store {
    * Выбор товара из списка
    * @param list
    * @param code
+   * @returns {Object}
    */
   findItem(list, code) {
-    return list.find((item) => item.code === code);
+    return list.find(item => item.code === code);
   }
 
   /**
