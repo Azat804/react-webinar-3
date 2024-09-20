@@ -1,0 +1,37 @@
+.Basket {
+  width: 100%;
+}
+
+.Basket-info {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 20px 0px 89px 0px;
+}
+
+.Basket-price__text {
+  width: 75%;
+  font-size: 18px;
+  font-family: 'Arial';
+  font-weight: 700;
+  text-align: right;
+}
+
+.Basket-price {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  margin-right: 100px;
+  padding: 0px 20px 0px 10px;
+}
+
+.Basket-price__value {
+  font-size: 18px;
+  font-family: 'Arial';
+  font-weight: 700;
+}
+
+.Basket-subtitle {
+  margin-bottom: 71px;
+}

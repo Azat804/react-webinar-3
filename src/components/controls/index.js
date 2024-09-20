@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 import { plural } from '../../utils';
+import { getFormattedPrice } from '../../utils';
 
 function Controls({ onClickModal = () => {}, name = '', totalCount = -1, totalCost = 0 }) {
   return (
@@ -18,7 +19,7 @@ function Controls({ onClickModal = () => {}, name = '', totalCount = -1, totalCo
                   one: 'товар',
                   few: 'товара',
                   many: 'товаров',
-                })} / ${totalCost} \u20bd`}
+                })} / ${getFormattedPrice(totalCost)}`}
           </span>
         </div>
       )}

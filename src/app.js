@@ -5,6 +5,8 @@ import Head from './components/head';
 import PageLayout from './components/page-layout';
 import { useState } from 'react';
 import CustomModal from './components/custom-modal';
+import Basket from './components/basket';
+import ItemShop from './components/item-shop';
 
 /**
  * Приложение
@@ -14,7 +16,8 @@ import CustomModal from './components/custom-modal';
 function App({ store }) {
   const list = store.getState().list;
   const basket = store.getState().basket;
-  const totalCost = store.getTotalCost();
+  const totalBasketCost = store.getState().totalBasketCost;
+  const countBasketProduct = store.getState().countBasketProduct;
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const callbacks = {
     onDeleteItem: useCallback(
@@ -44,19 +47,20 @@ function App({ store }) {
         <Controls
           onClickModal={callbacks.openModal}
           name="Перейти"
-          totalCount={basket.length}
-          totalCost={totalCost}
+          totalCount={countBasketProduct}
+          totalCost={totalBasketCost}
         />
-        <List list={list} onClick={callbacks.onAddItem} name="Добавить" />
+        <List list={list} onClick={callbacks.onAddItem} name="Добавить" itemComp={ItemShop} />
       </PageLayout>
-      <CustomModal
-        isOpen={modalIsOpen}
-        onCloseModal={callbacks.closeModal}
-        title="Корзина"
-        list={basket}
-        onDeleteItem={callbacks.onDeleteItem}
-        totalCost={totalCost}
-      ></CustomModal>
+      <CustomModal isOpen={modalIsOpen}>
+        <Basket
+          title="Корзина"
+          list={basket}
+          onCloseModal={callbacks.closeModal}
+          onDeleteItem={callbacks.onDeleteItem}
+          totalCost={totalBasketCost}
+        />
+      </CustomModal>
     </>
   );
 }

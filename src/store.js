@@ -69,6 +69,8 @@ class Store {
         }),
       });
     }
+    this.calcTotalCost();
+    this.calcCountProduct();
   }
 
   /**
@@ -81,6 +83,8 @@ class Store {
       // Новый список, в котором не будет удаляемой записи
       basket: this.state.basket.filter(item => item.code !== code),
     });
+    this.calcTotalCost();
+    this.calcCountProduct();
   }
 
   /**
@@ -94,11 +98,20 @@ class Store {
   }
 
   /**
-   * Получение общей стоимости товаров в корзине
-   * @returns {Number}
+   * Вычисление общей стоимости товаров в корзине
    */
-  getTotalCost() {
-    return this.state.basket.reduce((acc, current) => acc + current.price * current.count, 0);
+  calcTotalCost() {
+    this.state.totalBasketCost = this.state.basket.reduce(
+      (acc, current) => acc + current.price * current.count,
+      0,
+    );
+  }
+
+  /**
+   * Вычисление количества уникальных товаров в корзине
+   */
+  calcCountProduct() {
+    this.state.countBasketProduct = this.state.basket.length;
   }
 }
 

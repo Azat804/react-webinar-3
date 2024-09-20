@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Item from '../item';
+import Item from '../item-shop';
 import './style.css';
 
-function List({ list = [], onClick = () => {}, name = '' }) {
+function List({ list = [], onClick = () => {}, name = '', itemComp }) {
+  const ItemComp = itemComp;
   return (
     <div className="List">
       {list.map(item => (
         <div key={item.code} className="List-item">
-          <Item item={item} onClick={onClick} name={name} />
+          <ItemComp item={item} onClick={onClick} name={name} />
         </div>
       ))}
     </div>
