@@ -10,18 +10,55 @@ class Catalog extends StoreModule {
   initState() {
     return {
       list: [],
+      count: 0,
     };
   }
 
-  async load() {
-    const response = await fetch('/api/v1/articles');
+  async load(id = 1) {
+    if (id == 0) {
+      const response = await fetch(
+        '/api/v1/articles?limit=10&skip=20&fields=items(_id,%20title,%20price),count',
+      );
+      const json = await response.json();
+      this.setState(
+        {
+          ...this.getState(),
+          list: json.result.items,
+          count: json.result.count,
+        },
+        'Загружены товары из АПИ',
+      );
+    } else {
+      const response = await fetch(
+        `/api/v1/articles?limit=10&skip=${10 * (id - 1)}&fields=items(_id,%20title,%20price),count`,
+      );
+      const json = await response.json();
+      this.setState(
+        {
+          ...this.getState(),
+          list: json.result.items,
+          count: json.result.count,
+        },
+        `Загружены товары из АПИ${id}`,
+      );
+    }
+  }
+
+  async loadProduct(idProduct) {
+    const response = await fetch(
+      `/api/v1/articles/${idProduct}?fields=*,madeIn(title,code),category(title)`,
+    );
     const json = await response.json();
     this.setState(
       {
         ...this.getState(),
-        list: json.result.items,
+        description: json.result.description,
+        country: json.result.madeIn,
+        categotry: json.result.category.title,
+        edition: json.result.edition,
+        price: json.result.price,
       },
-      'Загружены товары из АПИ',
+      'Загружен определенный товар из АПИ ',
     );
   }
 }

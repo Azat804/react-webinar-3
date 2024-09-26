@@ -32,3 +32,12 @@
   white-space: nowrap;
   font-size: 18px;
 }
+
+.Item-link {
+  text-decoration: none;
+  color: #000000;
+}
+
+.Item-link:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,42 @@
+.ItemProduct {
+  padding: 0px 40px;
+}
+
+.ItemProduct-description {
+  font-size: 18px;
+  line-height: 21px;
+  padding-bottom: 20px;
+}
+
+.ItemProduct-country {
+  font-size: 18px;
+  padding-bottom: 20px;
+}
+
+.ItemProduct-country__bold {
+  font-weight: bold;
+}
+
+.ItemProduct-category {
+  font-size: 18px;
+  padding-bottom: 20px;
+}
+
+.ItemProduct-category__bold {
+  font-weight: bold;
+}
+
+.ItemProduct-edition {
+  font-size: 18px;
+  padding-bottom: 20px;
+}
+
+.ItemProduct-edition__bold {
+  font-weight: bold;
+}
+
+.ItemProduct-price {
+  font-size: 24px;
+  padding-bottom: 20px;
+  font-weight: bold;
+}

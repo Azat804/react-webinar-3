@@ -46,7 +46,7 @@ class Store {
    */
   setState(newState, description = 'setState') {
     console.group(
-      `%c${'store.setState'} %c${description}`,
+      `%c${'store.setState'} %c${description} `,
       `color: ${'#777'}; font-weight: normal`,
       `color: ${'#333'}; font-weight: bold`,
     );
