@@ -30,6 +30,7 @@ function Basket() {
             item={item}
             onRemove={callbacks.removeFromBasket}
             onCloseModal={callbacks.closeModal}
+            productAddress={`/product/${item._id}`}
           />
         );
       },

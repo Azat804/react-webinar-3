@@ -1,22 +1,20 @@
 import { memo } from 'react';
 import PropTypes from 'prop-types';
-import Item from '../item';
-import uuid from 'react-uuid';
 import './style.css';
 
 function PageList({ list = [], renderPage = () => {}, amount = 0 }) {
   return (
     <div className="PageList">
-      {list.map(item => {
+      {list.map((item, index) => {
         if (item.id !== 0) {
           return (
-            <div key={uuid()} className="PageList-item">
+            <div key={index} className="PageList-item">
               {renderPage(item, amount)}
             </div>
           );
         } else {
           return (
-            <div key={uuid()}>
+            <div key={index}>
               <span className="PageList-points"> ... </span>
             </div>
           );

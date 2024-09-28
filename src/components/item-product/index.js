@@ -1,10 +1,8 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 import { numberFormat } from '../../utils';
-import { Routes, Route, Link } from 'react-router-dom';
 import './style.css';
-import PageLayout from '../page-layout';
 
 function ItemProduct({ item = {}, id = '', onAdd = () => {} }) {
   const cn = bem('ItemProduct');
@@ -45,7 +43,7 @@ ItemProduct.propTypes = {
     country: PropTypes.shape({
       title: PropTypes.string,
       code: PropTypes.string,
-    }).isRequired,
+    }),
   }).isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onAdd: PropTypes.func,

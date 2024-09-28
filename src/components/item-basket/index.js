@@ -16,7 +16,7 @@ function ItemBasket(props) {
   return (
     <div className={cn()}>
       <div className={cn('title')}>
-        <Link to={`/product/${props.item._id}`} className={cn('link')} onClick={props.onCloseModal}>
+        <Link to={props.productAddress} className={cn('link')} onClick={props.onCloseModal}>
           {props.item.title}
         </Link>
       </div>
@@ -39,5 +39,6 @@ ItemBasket.propTypes = {
     amount: PropTypes.number,
   }).isRequired,
   onRemove: propTypes.func,
+  productAddress: PropTypes.string,
 };
 export default memo(ItemBasket);
