@@ -1,51 +1,50 @@
 import { memo, useCallback, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import useStore from '../../hooks/use-store';
-import useTranslate from '../../hooks/use-translate';
 import useSelector from '../../hooks/use-selector';
+import useTranslate from '../../hooks/use-translate';
 import useInit from '../../hooks/use-init';
-import Navigation from '../../containers/navigation';
 import PageLayout from '../../components/page-layout';
 import Head from '../../components/head';
-import CatalogFilter from '../../containers/catalog-filter';
-import CatalogList from '../../containers/catalog-list';
+import Navigation from '../../containers/navigation';
+import Spinner from '../../components/spinner';
+import ArticleCard from '../../components/article-card';
 import LocaleSelect from '../../containers/locale-select';
 import Authorization from '../../components/authorization';
+import LoginCard from '../../components/login-card';
 
 /**
- * Главная страница - первичная загрузка каталога
+ * Страница товара с первичной загрузкой товара по id из url адреса
  */
-function Main() {
+function Login() {
   const store = useStore();
 
-  useInit(
-    () => {
-      store.actions.catalog.initParams();
-    },
-    [],
-    true,
-  );
-
-  useInit(
-    () => {
-      store.actions.catalog.loadCategories();
-    },
-    [],
-    true,
-  );
+  // Параметры из пути /articles/:id
+  const params = useParams();
 
   const select = useSelector(state => ({
     token: state.authorization.token,
+    errorData: state.authorization.errorData,
+    waiting: state.authorization.waiting,
     profileData: state.authorization.profileData,
   }));
 
+  const { t } = useTranslate();
+
   const callbacks = {
     // Добавление в корзину
+    getToken: useCallback(
+      (login, password) => {
+        store.actions.authorization.getToken(login, password);
+      },
+      [store],
+    ),
 
     deleteToken: useCallback(() => {
       store.actions.authorization.deleteToken();
     }, [store]),
   };
-  const { t } = useTranslate();
+
   useMemo(() => {
     store.actions.authorization.getProfile(localStorage.getItem('token'));
   }, [store, select.token]);
@@ -62,10 +61,11 @@ function Main() {
         <LocaleSelect />
       </Head>
       <Navigation />
-      <CatalogFilter />
-      <CatalogList />
+      <Spinner active={select.waiting}>
+        <LoginCard onClick={callbacks.getToken} errorData={select.errorData} t={t} />
+      </Spinner>
     </PageLayout>
   );
 }
 
-export default memo(Main);
+export default memo(Login);

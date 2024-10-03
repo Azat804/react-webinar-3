@@ -1,0 +1,12 @@
+.Authorization {
+  padding: 10px 20px 10px 0px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 0px 20px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.Authorization-link {
+  font-size: 13px;
+}

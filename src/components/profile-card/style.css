@@ -1,0 +1,35 @@
+.ProfileCard {
+  padding: 40px 0px 0px 20px;
+}
+
+.ProfileCard-title {
+  font-size: 24px;
+  font-weight: bold;
+  padding-bottom: 30px;
+}
+
+.ProfileCard-name {
+  font-size: 18px;
+  padding-bottom: 20px;
+}
+
+.ProfileCard-name__mark {
+  font-weight: bold;
+}
+
+.ProfileCard-phone {
+  font-size: 18px;
+  padding-bottom: 20px;
+}
+
+.ProfileCard-phone__mark {
+  font-weight: bold;
+}
+
+.ProfileCard-email {
+  font-size: 18px;
+}
+
+.ProfileCard-email__mark {
+  font-weight: bold;
+}
