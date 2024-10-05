@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import useStore from '../../hooks/use-store';
 import useTranslate from '../../hooks/use-translate';
 import useSelector from '../../hooks/use-selector';
@@ -27,7 +27,7 @@ function Main() {
 
   useInit(
     () => {
-      store.actions.catalog.loadCategories();
+      store.actions.categories.loadCategories();
     },
     [],
     true,
@@ -35,7 +35,7 @@ function Main() {
 
   const select = useSelector(state => ({
     token: state.authorization.token,
-    profileData: state.authorization.profileData,
+    profileData: state.profile.profileData,
   }));
 
   const callbacks = {
@@ -46,9 +46,6 @@ function Main() {
     }, [store]),
   };
   const { t } = useTranslate();
-  useMemo(() => {
-    store.actions.authorization.getProfile(localStorage.getItem('token'));
-  }, [store, select.token]);
   return (
     <PageLayout>
       <Authorization

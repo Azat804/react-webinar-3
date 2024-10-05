@@ -1,17 +1,16 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import useStore from '../../hooks/use-store';
 import useSelector from '../../hooks/use-selector';
 import useTranslate from '../../hooks/use-translate';
-import useInit from '../../hooks/use-init';
 import PageLayout from '../../components/page-layout';
 import Head from '../../components/head';
 import Navigation from '../../containers/navigation';
 import Spinner from '../../components/spinner';
-import ArticleCard from '../../components/article-card';
 import LocaleSelect from '../../containers/locale-select';
 import Authorization from '../../components/authorization';
 import LoginCard from '../../components/login-card';
+import useAuthorization from '../../hooks/use-authorization';
 
 /**
  * Страница товара с первичной загрузкой товара по id из url адреса
@@ -26,7 +25,7 @@ function Login() {
     token: state.authorization.token,
     errorData: state.authorization.errorData,
     waiting: state.authorization.waiting,
-    profileData: state.authorization.profileData,
+    profileData: state.profile.profileData,
   }));
 
   const { t } = useTranslate();
@@ -45,9 +44,7 @@ function Login() {
     }, [store]),
   };
 
-  useMemo(() => {
-    store.actions.authorization.getProfile(localStorage.getItem('token'));
-  }, [store, select.token]);
+  useAuthorization(select.token);
   return (
     <PageLayout>
       <Authorization

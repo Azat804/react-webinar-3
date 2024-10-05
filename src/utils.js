@@ -33,3 +33,51 @@ export function codeGenerator(start = 0) {
 export function numberFormat(value, locale = 'ru-RU', options = {}) {
   return new Intl.NumberFormat(locale, options).format(value);
 }
+
+/**
+ * Получение категорий в правильном формате
+ * @param categories {Array} исходный массив категорий
+ * @returns {Array}
+ */
+export function getFormattedCategories(categories) {
+  let formattedCategories = [{ value: '', title: 'Все' }];
+  let categoriesTemp = calcCategories(categories, [...categories], '', []);
+  for (let item of categoriesTemp) {
+    formattedCategories.push({ value: item._id, title: item.title });
+  }
+  return formattedCategories;
+}
+
+/**
+ * Составление массива категорий с учетом вложенности
+ * @param arr {Array} Изменяемый массив категорий
+ * @param arrCopy {Array} Исходный массив категорий
+ * @param dash {String} Дефис
+ * @param res {String} Массив категорий с учетом вложенности
+ * @return {Array}
+ */
+function calcCategories(arr, arrCopy, dash, res) {
+  let newArr = [];
+  for (let item of arr) {
+    if (!res.find(elem => item._id === elem._id)) {
+      if (item.parent == null) {
+        res.push(item);
+      } else {
+        res.push({ ...item, title: `${dash}${item.title}` });
+      }
+      newArr = [
+        ...arrCopy.filter(val => {
+          let temp = val.parent;
+          return val.parent !== null && item._id === temp['_id'];
+        }),
+      ];
+      if (newArr.length === 0) {
+      } else {
+        calcCategories(newArr, arrCopy, (dash += '- '), res);
+        dash = dash.slice(0, dash.length - 2);
+      }
+    }
+  }
+
+  return res;
+}

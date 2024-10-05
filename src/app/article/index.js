@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import useStore from '../../hooks/use-store';
 import useSelector from '../../hooks/use-selector';
@@ -29,7 +29,7 @@ function Article() {
     token: state.authorization.token,
     article: state.article.data,
     waiting: state.article.waiting,
-    profileData: state.authorization.profileData,
+    profileData: state.profile.profileData,
   }));
 
   const { t } = useTranslate();
@@ -41,9 +41,7 @@ function Article() {
       store.actions.authorization.deleteToken();
     }, [store]),
   };
-  useMemo(() => {
-    store.actions.authorization.getProfile(localStorage.getItem('token'));
-  }, [store, select.token]);
+
   return (
     <PageLayout>
       <Authorization

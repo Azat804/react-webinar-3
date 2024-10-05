@@ -11,7 +11,6 @@ class CatalogState extends StoreModule {
   initState() {
     return {
       list: [],
-      categories: [],
       params: {
         page: 1,
         limit: 10,
@@ -105,61 +104,6 @@ class CatalogState extends StoreModule {
       },
       'Загружен список товаров из АПИ',
     );
-  }
-
-  /**
-   * Загрузка категорий
-   * @return {Promise<void>}
-   */
-  async loadCategories() {
-    const response = await fetch(`/api/v1/categories?fields=_id,title,parent(_id)&limit=*`);
-    const json = await response.json();
-    let categories = [{ value: '', title: 'Все' }];
-    let categoriesTemp = this.getCategories(json.result.items, [...json.result.items], '', []);
-    for (let item of categoriesTemp) {
-      categories.push({ value: item._id, title: item.title });
-    }
-    this.setState(
-      {
-        ...this.getState(),
-        categories: categories,
-      },
-      `Загружены категории из АПИ`,
-    );
-  }
-
-  /**
-   * Получение категорий в правильном формате
-   * @param arr {Array} Изменяемый массив категорий
-   * @param arrCopy {Array} Исходный массив категорий
-   * @param dash {String} Дефис
-   * @param res {String} Массив категорий в правильном формате
-   * @return {Array}
-   */
-  getCategories(arr, arrCopy, dash, res) {
-    let newArr = [];
-    for (let item of arr) {
-      if (!res.find(elem => item._id === elem._id)) {
-        if (item.parent == null) {
-          res.push(item);
-        } else {
-          res.push({ ...item, title: `${dash}${item.title}` });
-        }
-        newArr = [
-          ...arrCopy.filter(val => {
-            let temp = val.parent;
-            return val.parent !== null && item._id === temp['_id'];
-          }),
-        ];
-        if (newArr.length === 0) {
-        } else {
-          this.getCategories(newArr, arrCopy, (dash += '- '), res);
-          dash = dash.slice(0, dash.length - 2);
-        }
-      }
-    }
-
-    return res;
   }
 }
 

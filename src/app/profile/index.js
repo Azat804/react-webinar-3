@@ -1,18 +1,16 @@
-import { memo, useCallback, useEffect, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useStore from '../../hooks/use-store';
 import useSelector from '../../hooks/use-selector';
 import useTranslate from '../../hooks/use-translate';
-import useInit from '../../hooks/use-init';
 import PageLayout from '../../components/page-layout';
 import Head from '../../components/head';
 import Navigation from '../../containers/navigation';
 import Spinner from '../../components/spinner';
-import ArticleCard from '../../components/article-card';
 import LocaleSelect from '../../containers/locale-select';
 import Authorization from '../../components/authorization';
-import LoginCard from '../../components/login-card';
 import ProfileCard from '../../components/profile-card';
+import useAuthorization from '../../hooks/use-authorization';
 
 /**
  * Страница товара с первичной загрузкой товара по id из url адреса
@@ -25,8 +23,8 @@ function Profile() {
 
   const select = useSelector(state => ({
     token: state.authorization.token,
-    waiting: state.authorization.waiting,
-    profileData: state.authorization.profileData,
+    waiting: state.profile.waiting,
+    profileData: state.profile.profileData,
   }));
 
   const { t } = useTranslate();
@@ -44,14 +42,8 @@ function Profile() {
       navigate(`/login`);
     }, [store]),
   };
-  useMemo(() => {
-    store.actions.authorization.getProfile(localStorage.getItem('token'));
-  }, [store, select.token]);
-  useEffect(() => {
-    if (!localStorage.getItem('token')) {
-      navigate(`/login`);
-    }
-  }, [select.token]);
+  useAuthorization(select.token);
+
   return (
     <PageLayout>
       <Authorization
@@ -61,7 +53,7 @@ function Profile() {
         loginAddress={'/login'}
         profileAddress={'/profile'}
       />
-      <Head title={t('title')}>
+      <Head title={select.profileData ? select.profileData.name : ''}>
         <LocaleSelect />
       </Head>
       <Navigation />

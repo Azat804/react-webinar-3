@@ -5,6 +5,7 @@ import useSelector from '../../hooks/use-selector';
 import Select from '../../components/select';
 import Input from '../../components/input';
 import SideLayout from '../../components/side-layout';
+import { getFormattedCategories } from '../../utils.js';
 
 /**
  * Контейнер со всеми фильтрами каталога
@@ -15,7 +16,7 @@ function CatalogFilter() {
   const select = useSelector(state => ({
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
-    categories: state.catalog.categories,
+    categories: state.categories.categories,
     selectedCategory: state.catalog.params.selectedCategory,
   }));
 
@@ -45,7 +46,10 @@ function CatalogFilter() {
       ],
       [],
     ),
-    selectCategory: useMemo(() => select.categories, [select.categories, select.selectedCategory]),
+    selectCategory: useMemo(
+      () => getFormattedCategories(select.categories),
+      [select.categories, select.selectedCategory],
+    ),
   };
 
   return (

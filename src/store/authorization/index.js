@@ -6,7 +6,6 @@ import StoreModule from '../module';
 class AuthorizationState extends StoreModule {
   initState() {
     return {
-      profileData: { name: '' },
       waiting: false, // признак ожидания загрузки
       token: '',
       errorData: '',
@@ -37,9 +36,11 @@ class AuthorizationState extends StoreModule {
           password: password,
         }),
       });
+
       const json = await response.json();
+      console.log(response, json);
       if (response.status !== 200) {
-        throw new Error(json.error.message);
+        throw new Error(json.error.data.issues[0].message);
       }
 
       localStorage.setItem('token', json.result.token);
@@ -55,42 +56,6 @@ class AuthorizationState extends StoreModule {
       this.setState({ ...this.getState(), waiting: false, errorData: e.message });
     }
   }
-
-  /**
-   * Получение данных о профиле пользователя по токену
-   * @param token {String}
-   * @return {Promise<void>}
-   */
-  async getProfile(token) {
-    // Установка признака ожидания загрузки
-    this.setState({
-      waiting: true,
-    });
-    const tkn = token ? token : '';
-    try {
-      const response = await fetch(`/api/v1/users/self?fields=*`, {
-        method: 'GET',
-        headers: { 'X-token': tkn, 'Content-Type': 'application/json' },
-      });
-      const json = await response.json();
-      // Профиль загружен успешно
-      this.setState(
-        {
-          ...this.getState(),
-          profileData: { ...json.result, ...json.result.profile },
-          waiting: false,
-        },
-        'Загружен профиль из АПИ',
-      );
-    } catch (e) {
-      // Ошибка при загрузке
-      // @todo В стейт можно положить информацию об ошибке
-      this.setState({
-        waiting: false,
-      });
-    }
-  }
-
   /**
    * Сброс авторизации
    * @return {Promise<void>}
@@ -109,10 +74,7 @@ class AuthorizationState extends StoreModule {
       const json = await response.json();
       localStorage.removeItem('token');
       // Авторизация сброшена успешно
-      this.setState(
-        { ...this.getState(), profileData: { name: '' }, token: '', waiting: false },
-        'Сброшена авторизация',
-      );
+      this.setState({ ...this.getState(), token: '', waiting: false }, 'Сброшена авторизация');
     } catch (e) {
       // Ошибка при загрузке
       // @todo В стейт можно положить информацию об ошибке
