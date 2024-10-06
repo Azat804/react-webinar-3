@@ -17,6 +17,7 @@ class CategoriesState extends StoreModule {
   async loadCategories() {
     const response = await fetch(`/api/v1/categories?fields=_id,title,parent(_id)&limit=*`);
     const json = await response.json();
+    console.log(json.result.items);
     this.setState(
       {
         ...this.getState(),

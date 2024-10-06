@@ -62,7 +62,7 @@ function calcCategories(arr, arrCopy, dash, res) {
     if (!res.find(elem => item._id === elem._id)) {
       if (item.parent == null) {
         res.push(item);
-      } else {
+      } else if (arr.length != arrCopy.length && arr.length != 0) {
         res.push({ ...item, title: `${dash}${item.title}` });
       }
       newArr = [
