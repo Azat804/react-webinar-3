@@ -20,5 +20,16 @@
   "auth.password": "Password",
   "auth.signIn": "Sign in",
   "session.signIn": "Sign In",
-  "session.signOut": "Sign Out"
+  "session.signOut": "Sign Out",
+  "comment.title": "Comments",
+  "comment.send": "Send",
+  "comment.cancel": "Cancel",
+  "comment.reply": "Reply",
+  "comment.newComment": "New comment",
+  "comment.newAnswer": "New answer",
+  "comment.newCommentPlaceholder": "Text",
+  "comment.newReplyPlaceholder": "My answer for",
+  "comment.signIn": "Sign in",
+  "comment.signInReply": "to be able to respond.",
+  "comment.signInComment": "to be able to comment"
 }

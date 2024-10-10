@@ -1,0 +1,45 @@
+.ItemComment {
+  padding-bottom: 30px;
+  padding-right: 40px;
+}
+
+.ItemComment-title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0px 10px;
+  margin-bottom: 10px;
+}
+
+.ItemComment-title-username {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ItemComment-title-date {
+  font-size: 12px;
+  font-weight: 400;
+  color: #666666;
+}
+
+.ItemComment-description {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  margin-bottom: 10px;
+}
+
+.ItemComment-answer {
+  font-size: 12px;
+  font-weight: 400;
+  color: #0087e9;
+  cursor: pointer;
+}
+
+.ItemComment-answer:hover {
+  text-decoration: underline;
+}
+
+.ItemComment-footer {
+  padding-bottom: 87px;
+}

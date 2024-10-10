@@ -13,6 +13,7 @@ import TopHead from '../../containers/top-head';
 import { useDispatch, useSelector } from 'react-redux';
 import shallowequal from 'shallowequal';
 import articleActions from '../../store-redux/article/actions';
+import CommentList from '../../containers/comment-list';
 
 function Article() {
   const store = useStore();
@@ -41,7 +42,6 @@ function Article() {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
   };
-
   return (
     <PageLayout>
       <TopHead />
@@ -52,6 +52,7 @@ function Article() {
       <Spinner active={select.waiting}>
         <ArticleCard article={select.article} onAdd={callbacks.addToBasket} t={t} />
       </Spinner>
+      <CommentList />
     </PageLayout>
   );
 }

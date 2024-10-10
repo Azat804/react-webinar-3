@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import Item from '../item';
 import './style.css';
 
-function List({ list, renderItem = item => {} }) {
+function List({ list, renderItem = item => {}, isComment = false }) {
   return (
     <div className="List">
       {list.map(item => (
-        <div key={item._id} className="List-item">
+        <div key={item._id} className={isComment ? 'List-item-comment' : 'List-item'}>
           {renderItem(item)}
         </div>
       ))}
@@ -22,6 +22,7 @@ List.propTypes = {
     }),
   ).isRequired,
   renderItem: PropTypes.func,
+  isComment: PropTypes.bool,
 };
 
 export default memo(List);

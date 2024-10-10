@@ -1,0 +1,44 @@
+.CommentForm-title {
+  font-size: 12px;
+  font-weight: 700;
+  margin: 0px 0px 10px 0px;
+}
+
+.CommentForm-input-container {
+  flex-grow: 1;
+  width: 100%;
+}
+
+.CommentForm-input {
+  height: 76px;
+  display: flex;
+  align-items: start;
+  padding: 4px 5px 56px 5px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.CommentForm-input::placeholder {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.CommentForm-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0px 10px;
+}
+
+.CommentForm-info {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.CommentForm-reset {
+  color: #666666;
+  text-decoration: underline;
+  cursor: pointer;
+}
