@@ -1,7 +1,7 @@
 import APIService from './api';
 import Store from './store';
 import createStoreRedux from './store-redux';
-import I18n from './i18n';
+import I18nService from './i18n';
 
 class Services {
   constructor(config) {

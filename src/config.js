@@ -18,6 +18,7 @@ const config = {
   api: {
     baseUrl: '',
   },
+  // код языка по умолчанию
   i18n: {
     locale: 'ru',
   },

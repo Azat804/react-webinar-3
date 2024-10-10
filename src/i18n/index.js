@@ -6,30 +6,18 @@ class I18nService {
   constructor(services, config = {}) {
     this.services = services;
     this.config = config;
-    this.defaultHeaders = {
-      'Content-Type': 'application/json',
-    };
+    this.locale = this.config.locale;
   }
 
   /**
-   * HTTP запрос
-   * @param url
-   * @param method
-   * @param headers
-   * @param options
-   * @returns {Promise<{}>}
+   * Установка кода языка и установка заголовка в сервисе API
+   * @param locale {String} Код языка
    */
-  translate(lang, text, plural) {
-    let result = translations[lang] && text in translations[lang] ? translations[lang][text] : text;
-
-    if (typeof plural !== 'undefined') {
-      const key = new Intl.PluralRules(lang).select(plural);
-      if (key in result) {
-        result = result[key];
-      }
+  translate(locale = null) {
+    if (locale) {
+      this.locale = locale;
     }
-
-    return result;
+    this.services.api.setHeader('Accept-Language', this.locale);
   }
 }
 
