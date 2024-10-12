@@ -1,23 +1,38 @@
-import { memo } from 'react';
+import { memo, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useTranslate from '../../hooks/use-translate';
 import { cn as bem } from '@bem-react/classname';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './style.css';
 function CommentForm(props) {
+  const navigate = useNavigate();
   const { t } = useTranslate();
-  const width = 984 - props.padding;
+  const location = useLocation();
+  const width = 954 - props.padding;
   const cn = bem('CommentForm');
+  const ref = useRef();
+  useEffect(() => {
+    if (props.type === 'answer') {
+      ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, []);
   return (
     <div
+      ref={ref}
       className={cn()}
       style={{
-        paddingLeft: `${props.padding}px`,
+        paddingLeft: `${props.padding + 30}px`,
         paddingBottom: `${props.type == 'answer' ? 30 : props.exists ? 121 : 92}px`,
       }}
     >
       {!props.exists ? (
         <div className={cn('info')}>
-          <Link to={props.address}>{t('comment.signIn')}</Link>
+          <span
+            className={cn('signIn')}
+            onClick={() => navigate(props.address, { state: { back: location.pathname } })}
+          >
+            {t('comment.signIn')}
+          </span>
           {`, ${props.info}`}{' '}
           <span className={cn('reset')} onClick={props.onReset}>
             {props.resetName}

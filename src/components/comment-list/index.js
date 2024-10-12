@@ -1,13 +1,12 @@
 import { memo } from 'react';
 import PropTypes from 'prop-types';
-import Item from '../item';
 import './style.css';
 
-function List({ list, renderItem = item => {} }) {
+function CommentList({ list, renderItem = item => {} }) {
   return (
-    <div className="List">
-      {list.map(item => (
-        <div key={item._id} className="List-item">
+    <div className="CommentList">
+      {list.map((item, index) => (
+        <div key={index} className="CommentList-item">
           {renderItem(item)}
         </div>
       ))}
@@ -15,7 +14,7 @@ function List({ list, renderItem = item => {} }) {
   );
 }
 
-List.propTypes = {
+CommentList.propTypes = {
   list: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -24,4 +23,4 @@ List.propTypes = {
   renderItem: PropTypes.func,
 };
 
-export default memo(List);
+export default memo(CommentList);

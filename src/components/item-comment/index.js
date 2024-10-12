@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 import dateFormat from '../../utils/date-format';
@@ -12,11 +12,15 @@ function ItemComment(props) {
   const listTemp = props.list?.find(elem => elem._id === props.idComment);
   const username = listTemp ? listTemp.author.profile.name : '';
   const padding = listTemp ? listTemp.padding : 0;
+  const color = props.username === props.item.author?.profile.name ? '#666666' : '#000000';
+
   return (
     <>
       <div style={{ paddingLeft: props.item.padding + 'px' }} className={cn()}>
         <div className={cn('title')}>
-          <div className={cn('title-username')}>{props.item.author.profile.name}</div>
+          <div className={cn('title-username')} style={{ color: color }}>
+            {props.item.author?.profile.name}
+          </div>
           <div className={cn('title-date')}>{dateFormat(props.item.dateCreate, lang)}</div>
         </div>
         <div className={cn('description')}>{props.item.text}</div>

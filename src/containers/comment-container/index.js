@@ -4,20 +4,18 @@ import useTranslate from '../../hooks/use-translate';
 import { useParams } from 'react-router-dom';
 import useInit from '../../hooks/use-init';
 import ItemComment from '../../components/item-comment';
-import List from '../../components/list';
-import Pagination from '../../components/pagination';
 import Spinner from '../../components/spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import shallowequal from 'shallowequal';
 import commentActions from '../../store-redux/comment/actions';
-import treeToList from '../../utils/tree-to-list';
-import listToTree from '../../utils/list-to-tree';
 import commentFormat from '../../utils/comment-format';
 import CommentForm from '../../components/comment-form';
 import myUseSelector from '../../hooks/use-selector';
 import CommentTitle from '../../components/comment-title';
+import { addComment } from '../../utils/comment-format';
+import CommentList from '../../components/comment-list';
 
-function CommentList() {
+function CommentContainer() {
   const store = useStore();
   const dispatch = useDispatch();
   // Параметры из пути /articles/:id
@@ -32,21 +30,33 @@ function CommentList() {
 
   const mySelect = myUseSelector(state => ({
     exists: state.session.exists,
+    user: state.session.user,
   }));
   const select = useSelector(
     state => ({
       comment: state.comment.data,
       waiting: state.comment.waiting,
       newComment: state.comment.sentComment,
+      commentsCache: state.comment.commentsCache,
     }),
     shallowequal,
   ); // Нужно указать функцию для сравнения свойства объекта, так как хуком вернули объект
   useInit(() => {
     dispatch(commentActions.load(params.id));
-  }, [params.id, select.newComment]);
+  }, [params.id]);
+
   const callbacks = {
-    onAnswer: useCallback(idComment => setIdComment(idComment), [store]),
-    onReset: useCallback(() => setIdComment(''), [store]),
+    onAnswer: useCallback(
+      idComment => {
+        dispatch(commentActions.deleteComment());
+        setIdComment(idComment);
+      },
+      [store],
+    ),
+    onReset: useCallback(() => {
+      dispatch(commentActions.deleteComment());
+      setIdComment('');
+    }, [store]),
     onChange: useCallback(
       e => {
         idComment
@@ -73,7 +83,6 @@ function CommentList() {
   };
 
   const { t } = useTranslate();
-
   const renders = {
     item: useCallback(
       item => (
@@ -87,21 +96,35 @@ function CommentList() {
           onChange={callbacks.onChange}
           onSubmit={callbacks.onSubmit}
           address="/login"
+          username={mySelect.user.profile ? mySelect.user.profile.name : ''}
         />
       ),
       [idComment, data, mySelect.exists, t],
     ),
   };
   const comments = useMemo(() => {
-    return commentFormat(select.comment.items, idComment);
-  }, [select.comment.items, idComment]);
+    let loadedComments = select.commentsCache?.length
+      ? select.commentsCache
+      : select.comment
+        ? select.comment.items
+        : [];
+
+    let addedComments = addComment(
+      loadedComments,
+      select.newComment,
+      mySelect.user.profile ? mySelect.user.profile.name : '',
+    );
+    dispatch(commentActions.addComment(addedComments));
+    return commentFormat(addedComments, idComment);
+  }, [select.comment.items, idComment, select.newComment]);
+  //console.log(comments);
   return (
     <Spinner active={select.waiting}>
       <CommentTitle countComment={comments.length} />
-      <List list={comments} renderItem={renders.item} isComment={true} />
+      <CommentList list={comments} renderItem={renders.item} isComment={true} />
       {!idComment ? (
         <CommentForm
-          padding={40}
+          padding={10}
           type="add"
           title={t('comment.newComment')}
           placeholder={t('comment.newCommentPlaceholder')}
@@ -121,4 +144,4 @@ function CommentList() {
   );
 }
 
-export default memo(CommentList);
+export default memo(CommentContainer);

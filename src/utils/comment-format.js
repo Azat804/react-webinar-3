@@ -20,7 +20,7 @@ export default function commentFormat(comments, idComment) {
         ...treeToList(listToTree(formattedComments), (item, level) => ({
           ...item,
           value: item._id,
-          padding: 40 + 30 * level,
+          padding: 40 + 30 * level > 770 ? 770 : 40 + 30 * level,
         })),
       ]
     : [];
@@ -34,8 +34,44 @@ export default function commentFormat(comments, idComment) {
     }
     return item;
   });
+
+  const indexOfIdComment = res?.findIndex(item => item._id === idComment);
+  const indexOfPrevTarget = res?.findIndex(
+    (item, index) => index > indexOfIdComment && item.padding <= res[indexOfIdComment]?.padding,
+  );
+  const targetIndex = indexOfPrevTarget === -1 ? res.length - 1 : indexOfPrevTarget - 1;
   if (res.length != 0 && ind != -1) {
-    res[ind].isOpen = true;
+    res[targetIndex].isOpen = true;
+  }
+
+  return res;
+}
+
+/**
+ * Добавление нового комментария
+ * @param comments {Array} исходный массив комментариев
+ * @param newComment {Object} новый комментарий
+ * @param username {String} имя авторизованного пользователя
+ * @returns {Array}
+ */
+export function addComment(comments, newComment, username) {
+  if (!username || !newComment._id) {
+    return comments;
+  }
+  let res = [...comments];
+  let newCommentFormatted = {
+    author: { profile: { name: username } },
+    dateCreate: newComment.dateCreate,
+    parent: newComment.parent,
+    text: newComment.text,
+    _id: newComment._id,
+  };
+  if (newCommentFormatted.parent._type == 'article') {
+    newCommentFormatted = { ...newCommentFormatted, children: [] };
+    res.push(newCommentFormatted);
+  } else {
+    newCommentFormatted = { ...newCommentFormatted, children: [1] };
+    res.push(newCommentFormatted);
   }
   return res;
 }

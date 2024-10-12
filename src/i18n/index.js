@@ -6,7 +6,7 @@ class I18nService {
   constructor(services, config = {}) {
     this.services = services;
     this.config = config;
-    this.locale = this.config.locale;
+    this.state = { locale: this.config.locale };
   }
 
   /**
@@ -14,10 +14,8 @@ class I18nService {
    * @param locale {String} Код языка
    */
   translate(locale = null) {
-    if (locale) {
-      this.locale = locale;
-    }
-    this.services.api.setHeader('Accept-Language', this.locale);
+    this.state = { ...this.state, locale: locale ? locale : this.state.locale };
+    this.services.api.setHeader('Accept-Language', this.state.locale);
   }
 }
 

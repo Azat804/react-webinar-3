@@ -14,6 +14,7 @@
 .ItemComment-title-username {
   font-size: 12px;
   font-weight: 700;
+  overflow-wrap: break-word;
 }
 
 .ItemComment-title-date {
@@ -27,6 +28,7 @@
   font-weight: 400;
   line-height: 16px;
   margin-bottom: 10px;
+  overflow-wrap: break-word;
 }
 
 .ItemComment-answer {
