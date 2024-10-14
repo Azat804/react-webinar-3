@@ -12,10 +12,11 @@ import ArticleCard from '../../components/article-card';
 import LocaleSelect from '../../containers/locale-select';
 import TopHead from '../../containers/top-head';
 import ProfileCard from '../../components/profile-card';
+import useTranslateServices from '../../hooks/use-translate-services';
 
 function Profile() {
   const store = useStore();
-  const { lang, t } = useTranslate();
+  const { lang, t } = useTranslateServices();
   useInit(() => {
     store.actions.profile.load();
   }, [lang]);

@@ -13,13 +13,13 @@ import useTranslateServices from '../../hooks/use-translate-services';
 
 function Main() {
   const store = useStore();
-  const { t } = useTranslate();
-  const translate = useTranslateServices();
+  //const { t } = useTranslate();
+  const {t, lang} = useTranslateServices();
   useInit(
     async () => {
       await Promise.all([store.actions.catalog.initParams(), store.actions.categories.load()]);
     },
-    [translate.state],
+    [lang],
     true,
   );
 

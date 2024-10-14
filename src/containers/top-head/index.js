@@ -4,9 +4,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useTranslate from '../../hooks/use-translate';
 import useSelector from '../../hooks/use-selector';
 import useStore from '../../hooks/use-store';
+import useTranslateServices from '../../hooks/use-translate-services';
 
 function TopHead() {
-  const { t } = useTranslate();
+  const { t } = useTranslateServices();
   const navigate = useNavigate();
   const location = useLocation();
   const store = useStore();

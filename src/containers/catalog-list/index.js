@@ -6,6 +6,7 @@ import Item from '../../components/item';
 import List from '../../components/list';
 import Pagination from '../../components/pagination';
 import Spinner from '../../components/spinner';
+import useTranslateServices from '../../hooks/use-translate-services';
 
 function CatalogList() {
   const store = useStore();
@@ -39,7 +40,7 @@ function CatalogList() {
     ),
   };
 
-  const { t } = useTranslate();
+  const { t } = useTranslateServices();
 
   const renders = {
     item: useCallback(

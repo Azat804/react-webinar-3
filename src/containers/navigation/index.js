@@ -7,6 +7,7 @@ import BasketTool from '../../components/basket-tool';
 import SideLayout from '../../components/side-layout';
 import { useDispatch } from 'react-redux';
 import modalsActions from '../../store-redux/modals/actions';
+import useTranslateServices from '../../hooks/use-translate-services';
 
 function Navigation() {
   const store = useStore();
@@ -34,7 +35,7 @@ function Navigation() {
   };
 
   // Функция для локализации текстов
-  const { t } = useTranslate();
+  const { t } = useTranslateServices();
 
   const options = {
     menu: useMemo(() => [{ key: 1, title: t('menu.main'), link: '/' }], [t]),

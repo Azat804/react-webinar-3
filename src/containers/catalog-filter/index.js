@@ -7,6 +7,7 @@ import Input from '../../components/input';
 import SideLayout from '../../components/side-layout';
 import treeToList from '../../utils/tree-to-list';
 import listToTree from '../../utils/list-to-tree';
+import useTranslateServices from '../../hooks/use-translate-services';
 
 function CatalogFilter() {
   const store = useStore();
@@ -60,7 +61,7 @@ function CatalogFilter() {
     ),
   };
 
-  const { t } = useTranslate();
+  const { t } = useTranslateServices();
 
   return (
     <SideLayout padding="medium">

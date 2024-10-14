@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 import dateFormat from '../../utils/date-format';
 import useTranslate from '../../hooks/use-translate';
+import useTranslateServices from '../../hooks/use-translate-services';
 import './style.css';
 import CommentForm from '../comment-form';
 
 function ItemComment(props) {
-  const { lang, t } = useTranslate();
+  const { lang, t } = useTranslateServices();
   const cn = bem('ItemComment');
   const listTemp = props.list?.find(elem => elem._id === props.idComment);
   const username = listTemp ? listTemp.author.profile.name : '';

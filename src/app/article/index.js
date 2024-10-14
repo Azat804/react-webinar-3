@@ -20,15 +20,15 @@ function Article() {
   const store = useStore();
 
   const dispatch = useDispatch();
-  const { lang, t } = useTranslate();
-  const translate = useTranslateServices();
+  //const { lang, t } = useTranslate();
+  const {t, lang} = useTranslateServices();
   // Параметры из пути /articles/:id
 
   const params = useParams();
 
   useInit(() => {
     dispatch(articleActions.load(params.id));
-  }, [params.id, translate.state.locale, lang]);
+  }, [params.id, lang]);
 
   const select = useSelector(
     state => ({

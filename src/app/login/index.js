@@ -12,9 +12,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import useStore from '../../hooks/use-store';
 import useSelector from '../../hooks/use-selector';
 import useInit from '../../hooks/use-init';
+import useTranslateServices from '../../hooks/use-translate-services';
 
 function Login() {
-  const { t } = useTranslate();
+  const {t} = useTranslateServices();
   const location = useLocation();
   const navigate = useNavigate();
   const store = useStore();

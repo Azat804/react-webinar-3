@@ -6,9 +6,9 @@ import Select from '../../components/select';
 import useTranslateServices from '../../hooks/use-translate-services';
 
 function LocaleSelect() {
-  const { lang, setLang } = useTranslate();
-  const translate = useTranslateServices();
-  translate.translate(lang);
+  //const { lang, setLang } = useTranslate();
+  const {lang, setLang} = useTranslateServices();
+  //translate.translate(lang);
   const options = {
     lang: useMemo(
       () => [

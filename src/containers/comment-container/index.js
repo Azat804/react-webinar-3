@@ -14,6 +14,7 @@ import myUseSelector from '../../hooks/use-selector';
 import CommentTitle from '../../components/comment-title';
 import { addComment } from '../../utils/comment-format';
 import CommentList from '../../components/comment-list';
+import useTranslateServices from '../../hooks/use-translate-services';
 
 function CommentContainer() {
   const store = useStore();
@@ -82,7 +83,7 @@ function CommentContainer() {
     ),
   };
 
-  const { t } = useTranslate();
+  const { t } = useTranslateServices();
   const renders = {
     item: useCallback(
       item => (

@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import useTranslate from '../../hooks/use-translate';
 import { cn as bem } from '@bem-react/classname';
 import { useLocation, useNavigate } from 'react-router-dom';
+import useTranslateServices from '../../hooks/use-translate-services';
 import './style.css';
 function CommentForm(props) {
   const navigate = useNavigate();
-  const { t } = useTranslate();
+  const { t } = useTranslateServices();
   const location = useLocation();
   const width = 954 - props.padding;
   const cn = bem('CommentForm');
